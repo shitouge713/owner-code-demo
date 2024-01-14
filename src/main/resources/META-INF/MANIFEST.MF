@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Premain-Class: owner.code.demo.agent.AgentDemo
+Agent-Class: owner.code.demo.agent.AgentDemo
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
