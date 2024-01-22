@@ -29,7 +29,7 @@ public class ComputeTask implements Callable<Integer> {
         }
         //模拟线程耗时5s
         try {
-            Thread.sleep(5000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
