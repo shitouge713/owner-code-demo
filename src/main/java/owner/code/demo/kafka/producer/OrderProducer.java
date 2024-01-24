@@ -1,6 +1,5 @@
 package owner.code.demo.kafka.producer;
 
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,9 +36,9 @@ public class OrderProducer {
      * @return
      */
     public void sendMsg(String message) {
-        log.info("order-kafka-send,messageDTO:{}", JSON.toJSONString(message));
+        log.info("order-kafka-send,messageDTO:{}", message);
         try {
-            ListenableFuture<SendResult<String, String>> future = template.send(testTopic, JSON.toJSONString(message));
+            ListenableFuture<SendResult<String, String>> future = template.send(testTopic, message);
             CompletableFuture<SendResult<String, String>> completable = future.completable();
             completable.whenCompleteAsync((n, e) -> {
                 if (null != e) {
@@ -49,13 +48,13 @@ public class OrderProducer {
                 }
             });
         } catch (Exception e) {
-            log.error("fatalError,订单消息异常,messageDTO:{},e:", JSON.toJSONString(message), e);
+            log.error("fatalError,订单消息异常,messageDTO:{},e:", message, e);
         }
         log.info("kafka发送消息完成");
     }
 
     public void sendMsg2(String message) {
-        ListenableFuture<SendResult<String, String>> future = template.send(testTopic, JSON.toJSONString(message));
+        ListenableFuture<SendResult<String, String>> future = template.send(testTopic, message);
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override
             public void onFailure(Throwable throwable) {
