@@ -3,10 +3,10 @@ package owner.code.demo.cglib;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
 
-@Component("myFactoryBean")
-public class MyFactoryBean implements FactoryBean {
+@Component
+public class MyFactoryBean implements FactoryBean<SingService> {
 
-    public Object getObject() throws Exception {
+    public SingService getObject() throws Exception {
         return new SingService();
     }
 
