@@ -144,6 +144,11 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.23</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -173,4 +178,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>

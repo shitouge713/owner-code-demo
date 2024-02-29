@@ -1,15 +1,14 @@
 package owner.code.demo;
 
 
-import org.springframework.beans.factory.FactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import owner.code.demo.cglib.MyFactoryBean;
-import owner.code.demo.cglib.SingService;
+import org.springframework.scheduling.annotation.EnableAsync;
 
-
+@EnableAsync
+@MapperScan(basePackages = "owner.code.demo.dao")
 @SpringBootApplication
 public class OwnerCodeApplication {
     public static void main(String[] args) {

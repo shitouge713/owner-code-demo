@@ -5,11 +5,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 我们得到一个ID列表，我们希望从中获取一个名称和一个统计信息，并将它们成对地组合起来，所有这些都是异步的。
- * 以下示例使用CompletableFuture类型的列表执行此操作：
+ * CompletableFuture使用自定义线程池
  */
 public class CompletableFutureDemo02 {
     static ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor(); //定义线程池
+
     static {
         executor.setCorePoolSize(5); //核心线程数
         executor.setMaxPoolSize(10); //最大线程数
@@ -19,34 +19,66 @@ public class CompletableFutureDemo02 {
 
     public static void main(String[] args) {
         CompletableFutureDemo02 demo = new CompletableFutureDemo02();
-        demo.method();
+        demo.thenApplyAsyncMethod();
     }
 
-    public void method() {
+    /**
+     * thenApply/thenApplyAsync
+     * 第一个任务执行完成后，执行第二个回调方法任务，
+     * 会将该任务的执行结果，作为入参，传递到回调方法中，但是回调方法有返回值
+     */
+    public void thenApplyAsyncMethod() {
         CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
-            //模拟异步任务
+            System.out.println("第一个任务结果，线程名称：" + Thread.currentThread().getName());
+            return "第一个任务结果";
+        }, executor);
+        CompletableFuture<String> future2 = future1.thenApplyAsync((a) -> {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
+            System.out.println("第二个任务结果，线程名称：" + Thread.currentThread().getName());
+            return "第二个任务结果";
+        }, executor);
+        System.out.println("主线程执行结束，线程名称：" + Thread.currentThread().getName());
+    }
+
+    public void method1() {
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> {
             return "Hello";
         }, executor);
-        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+        future1.thenApply((a) -> {
             //模拟异步任务
             try {
-                Thread.sleep(3000);
+                Thread.sleep(800);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return "World";
-        }, executor);
-        CompletableFuture<String> result = future1.thenCombine(future2, (str1, str2) -> str1 + " " + str2);
-        //当异步任务完成后，获取结果并输出到控制台
-        future2.thenAccept((a) -> {
-            System.out.println(Thread.currentThread().getName() + ",a");
+            System.out.println("第二个任务");
+            return "第二个任务";
         });
-        System.out.println(Thread.currentThread().getName() + ",程序执行完成");
+        future1.thenApply((a) -> {
+            //模拟异步任务
+            try {
+                Thread.sleep(600);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("第三个任务");
+            return "第三个任务";
+        });
+        future1.thenApply((a) -> {
+            //模拟异步任务
+            try {
+                Thread.sleep(400);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("第四个任务");
+            return "第四个任务";
+        });
+        System.out.println(future1);
         //关闭线程池
         executor.shutdown();
     }
