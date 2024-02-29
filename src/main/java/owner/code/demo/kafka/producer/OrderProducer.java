@@ -27,7 +27,7 @@ public class OrderProducer {
     @Autowired
     private KafkaTemplate<String, String> template;
 
-    @Value("${spring.kafka.testTopic}")
+    @Value("${spring.kafka.testTopic:123}")
     private String testTopic;
 
     /**

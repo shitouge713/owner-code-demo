@@ -39,11 +39,12 @@ public class AsyncDemoServiceImpl {
     @Async("myselfExecutor")
     public void asyncMethod2() {
         try {
-            Thread.sleep(2000);
+            System.out.println("asyncMethod2，线程名称：" + Thread.currentThread().getName());
+            Thread.sleep(1000000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("asyncMethod2，线程名称：" + Thread.currentThread().getName());
+
     }
 
 
