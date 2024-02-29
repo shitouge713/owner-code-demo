@@ -6,28 +6,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import owner.code.demo.service.AsyncDemoServiceImpl;
+import owner.code.demo.service.TransactionalServiceAImpl;
 
 @Slf4j
 @RestController
 @Api(tags = "AsyncDemo", consumes = "application/json")
-public class AsyncDemoController {
+public class TransactionalController {
 
     @Autowired
-    private AsyncDemoServiceImpl asyncDemoService;
+    private TransactionalServiceAImpl transactionalServiceAImpl;
 
-    @GetMapping("/asyncMethod")
+    @GetMapping("/transaction/asyncMethod")
     @ApiOperation("测试异步调用相关逻辑1")
     public void asyncMethod() throws Exception {
         System.out.println("controller.asyncMethod，线程名称：" + Thread.currentThread().getName());
-        asyncDemoService.asyncMethod();
-    }
-
-    @GetMapping("/asyncMethod2")
-    @ApiOperation("测试异步调用相关逻辑2")
-    public void asyncMethod2() {
-        System.out.println("controller.asyncMethod2，线程名称：" + Thread.currentThread().getName());
-        asyncDemoService.asyncMethod2();
+        transactionalServiceAImpl.asyncMethod3();
     }
 
 }
