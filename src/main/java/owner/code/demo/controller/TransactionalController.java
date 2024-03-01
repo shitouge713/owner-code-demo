@@ -23,4 +23,12 @@ public class TransactionalController {
         transactionalServiceAImpl.asyncMethod3();
     }
 
+    @GetMapping("/transaction/reduceKu")
+    @ApiOperation("测试高并发下库存扣减")
+    public String reduceKu()  {
+        return transactionalServiceAImpl.reduceKu();
+    }
+
+
+
 }

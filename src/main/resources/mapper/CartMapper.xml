@@ -16,4 +16,10 @@
         <result column="gmt_modify" property="gmtModify"/>
     </resultMap>
 
+    <update id="reduceKu">
+        update o_cart
+        set quantity = quantity - #{param.kcSize}
+        where id = #{param.id}
+          and quantity >= #{param.kcSize};
+    </update>
 </mapper>

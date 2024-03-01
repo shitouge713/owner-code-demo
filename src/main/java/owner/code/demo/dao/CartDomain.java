@@ -19,5 +19,7 @@ public class CartDomain extends ServiceImpl<CartDao, Cart> implements IService<C
     @Autowired
     private CartDao cartDao;
 
-
+    public int reduceKu(UpdateCartParams param) {
+        return cartDao.reduceKu(param);
+    }
 }
