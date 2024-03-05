@@ -20,6 +20,6 @@
         update o_cart
         set quantity = quantity - #{param.kcSize}
         where id = #{param.id}
-          and quantity >= #{param.kcSize}
+          and quantity >= #{param.kcSize};
     </update>
 </mapper>
