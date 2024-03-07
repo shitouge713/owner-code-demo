@@ -10,30 +10,6 @@ spring:
     url: jdbc:mysql://10.180.3.2:3306/h_order?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&allowMultiQueries=true
     username: test
     password: Bx1jZLR3ZK5pic72NwaE
-  # 指定数据库分布的情况和数据表分布的情况 标准分片表配置
-  shardingsphere:
-    datasource:
-      names: ds0
-      ds0:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        username: test
-        password: Bx1jZLR3ZK5pic72NwaE
-        jdbc-url: jdbc:mysql://10.180.3.2:3306/h_order?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
-    rules:
-      sharding:
-        tables:
-          ac_sh_transaction:
-            actual-data-nodes: ds0.ac_sh_transaction_${0..15}
-            table-strategy:
-              standard:
-                sharding-column: uid
-                sharding-algorithm-name: transaction_algorithm
-        sharding-algorithms:
-          transaction_algorithm:
-            type: TRANSACTION_ALGORITHM
-    props:
-      sql.show: true
   kafka:
     bootstrap-servers: localhost:9092
     producer:
@@ -55,7 +31,3 @@ spring:
     instantiate:
       enable: true
     testTopic: order_topic_sxl
-
-main:
-  # 一个实体类对应两张表，覆盖
-  allow-bean-definition-overriding: true
