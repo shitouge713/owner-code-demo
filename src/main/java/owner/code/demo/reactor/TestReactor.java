@@ -1,5 +1,6 @@
 package owner.code.demo.reactor;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -7,17 +8,29 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Slf4j
 public class TestReactor {
     public static void main(String[] args) {
         TestReactor t = new TestReactor();
-        t.method2();
-    }
-
-    public void method2() {
-        Mono<String> mono = Mono.just("123");
+        Mono<String> mono = t.handle();
+        t.method2(mono);
         mono.subscribe(new MySubscriber());
     }
 
+    public void method2(Mono<String> mono) {
+        mono.doOnSuccess(
+                aVoid -> log.info("Handling completed，{}", aVoid)
+        );
+    }
+
+    public Mono<String> handle(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return Mono.just("123");
+    }
     public void method1() {
         //just()：创建Flux序列，并声明数据流
         Flux<Integer> integerFlux = Flux.just(1, 2, 3, 4);
