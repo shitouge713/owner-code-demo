@@ -16,10 +16,11 @@ public class ThreadNotSafeDemo {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        method();
+        ThreadNotSafeDemo demo = new ThreadNotSafeDemo();
+        demo.method();
     }
 
-    public static void method() throws InterruptedException {
+    public  void method() throws InterruptedException {
         final Counter counter = new Counter();
         // 创建100个线程，每个线程对同一个计数器增加10000次
         Thread[] threads = new Thread[100];
