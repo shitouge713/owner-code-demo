@@ -22,4 +22,18 @@ public class CartDomain extends ServiceImpl<CartDao, Cart> implements IService<C
     public int reduceKu(UpdateCartParams param) {
         return cartDao.reduceKu(param);
     }
+
+    public Cart searchById(Long id) {
+        return cartDao.searchById(id);
+    }
+
+    public Cart searchByIInShareMode(Long id) {
+        return cartDao.searchByIInShareMode(id);
+    }
+
+    public Integer updateById(Long id) {
+        return cartDao.updateById(id);
+    }
+
+
 }
