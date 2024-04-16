@@ -27,8 +27,14 @@ public class OrderProducer {
     @Autowired
     private KafkaTemplate<String, String> template;
 
-    @Value("${spring.kafka.testTopic:123}")
-    private String testTopic;
+    @Value("${spring.kafka.orderTopicLocal:order_topic_test}")
+    private String orderTopicTest;
+
+    @Value("${spring.kafka.topicOrderTest:topic_order_test}")
+    private String topicOrderTest;
+
+    @Value("${spring.kafka.orderTopicLocal:order_topic_local}")
+    private String orderTopicLocal;
 
     /**
      * 发送消息
@@ -38,7 +44,7 @@ public class OrderProducer {
     public void sendMsg(String message) {
         log.info("order-kafka-send,messageDTO:{}", message);
         try {
-            ListenableFuture<SendResult<String, String>> future = template.send(testTopic, message);
+            ListenableFuture<SendResult<String, String>> future = template.send(orderTopicLocal, message);
             CompletableFuture<SendResult<String, String>> completable = future.completable();
             completable.whenCompleteAsync((n, e) -> {
                 if (null != e) {
@@ -54,7 +60,22 @@ public class OrderProducer {
     }
 
     public void sendMsg2(String message) {
-        ListenableFuture<SendResult<String, String>> future = template.send(testTopic, message);
+        ListenableFuture<SendResult<String, String>> future = template.send(topicOrderTest, message);
+        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                System.out.println("发送报错了");
+            }
+
+            @Override
+            public void onSuccess(SendResult<String, String> stringStringSendResult) {
+                System.out.println("发送成功了！");
+            }
+        });
+    }
+
+    public void sendMsg3(String message) {
+        ListenableFuture<SendResult<String, String>> future = template.send(orderTopicTest, message);
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override
             public void onFailure(Throwable throwable) {

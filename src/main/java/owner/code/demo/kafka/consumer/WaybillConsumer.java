@@ -23,7 +23,15 @@ import java.util.Objects;
 @Component
 @ConditionalOnProperty(prefix = "spring.kafka.instantiate", name = "enable", havingValue = "true")
 public class WaybillConsumer {
-    @KafkaListener(topics = "${spring.kafka.testTopic}", groupId = "${spring.kafka.consumer.group-id}")
+
+    /**
+     * 当一台服务器，concurrency=1时，验证一个消费组下的一个线程是否串行处理多个topic的任务
+     * @param record
+     * @param ack
+     */
+    @KafkaListener(topics = "${spring.kafka.orderTopicLocal}", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "${spring.kafka.topicOrderTest}", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "${spring.kafka.orderTopicTest}", groupId = "${spring.kafka.consumer.group-id}")
     public void onMessage(ConsumerRecord record, Acknowledgment ack) {
         log.info("kafka开始接受kafka消息");
         try {
@@ -31,7 +39,8 @@ public class WaybillConsumer {
                 log.error("fatalError,接受到的运单消息内容为空");
                 return;
             }
-            log.info("kafka消息,record:{}", record.toString());
+            log.info("kafka消息,record:{}", record);
+            Thread.sleep(2000);
         } catch (Exception e) {
             log.error("fatalError,WaybillConsumer处理消息异常e:", e);
         } finally {

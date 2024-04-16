@@ -11,7 +11,10 @@ spring:
     username: devops
     password: 12345678
   kafka:
-    bootstrap-servers: localhost:9092
+    orderTopicTest: order_topic_test
+    topicOrderTest: topic_order_test
+    orderTopicLocal: order_topic_local
+    bootstrap-servers: 127.0.0.1:9092
     producer:
       retries: 3
       acks: all
@@ -30,4 +33,3 @@ spring:
       type: single
     instantiate:
       enable: true
-    testTopic: order_topic_sxl
