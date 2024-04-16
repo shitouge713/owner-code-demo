@@ -19,21 +19,38 @@ public class KafkaController {
     @GetMapping("/sendMsg")
     @ApiOperation("kafka发送消息控制器")
     public String sendMsg(String msg) {
-        orderProducer.sendMsg(msg);
+        for (int i = 0; i < 5; i++) {
+            orderProducer.sendMsg(msg + i);
+        }
         return "发送成功";
     }
 
     @GetMapping("/sendMsg2")
     @ApiOperation("kafka发送消息控制器2")
     public String sendMsg2(String msg) {
-        orderProducer.sendMsg2(msg);
+        for (int i = 0; i < 5; i++) {
+            orderProducer.sendMsg2(msg + i);
+        }
         return "发送成功";
     }
 
     @GetMapping("/sendMsg3")
     @ApiOperation("kafka发送消息控制器3")
     public String sendMsg3(String msg) {
-        orderProducer.sendMsg3(msg);
+        for (int i = 0; i < 5; i++) {
+            orderProducer.sendMsg3(msg + i);
+        }
+        return "发送成功";
+    }
+
+    @GetMapping("/sendMsgAll")
+    @ApiOperation("kafka发送消息控制器3")
+    public String sendMsgAll(String msg) {
+        for (int i = 0; i < 5; i++) {
+            orderProducer.sendMsg(msg + i);
+            orderProducer.sendMsg2(msg + i);
+            orderProducer.sendMsg3(msg + i);
+        }
         return "发送成功";
     }
 }

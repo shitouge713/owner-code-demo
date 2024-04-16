@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8089
 
 spring:
   application:
@@ -11,9 +11,9 @@ spring:
     username: devops
     password: 12345678
   kafka:
-    orderTopicTest: order_topic_test
-    topicOrderTest: topic_order_test
-    orderTopicLocal: order_topic_local
+    orderTopicTest: order_topic_test1
+    topicOrderTest: topic_order_test1
+    orderTopicLocal: order_topic_local1
     bootstrap-servers: 127.0.0.1:9092
     producer:
       retries: 3
@@ -28,7 +28,7 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
       ack-mode: manual_immediate
-      concurrency: 1
+      concurrency: 3
       missing-topics-fatal: false
       type: single
     instantiate:

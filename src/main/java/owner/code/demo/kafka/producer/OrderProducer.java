@@ -27,7 +27,7 @@ public class OrderProducer {
     @Autowired
     private KafkaTemplate<String, String> template;
 
-    @Value("${spring.kafka.orderTopicLocal:order_topic_test}")
+    @Value("${spring.kafka.orderTopicTest:order_topic_test}")
     private String orderTopicTest;
 
     @Value("${spring.kafka.topicOrderTest:topic_order_test}")
