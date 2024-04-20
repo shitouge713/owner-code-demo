@@ -28,4 +28,13 @@ public class AsyncDemoController {
         asyncDemoService.asyncMethod2();
     }
 
+    @GetMapping("/asyncMethod3")
+    @ApiOperation("测试异步调用相关逻辑3")
+    public void asyncMethod3() {
+        System.out.println("controller.asyncMethod3，线程名称：" + Thread.currentThread().getName());
+        asyncDemoService.asyncMethod3();
+    }
+
+
+
 }

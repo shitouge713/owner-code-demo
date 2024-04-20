@@ -166,6 +166,13 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
+        <!--
+        验证自定义的启动包是否生效
+        <dependency>
+            <groupId>com.owner</groupId>
+            <artifactId>owner-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>-->
     </dependencies>
 
     <build>

@@ -47,5 +47,13 @@ public class AsyncDemoServiceImpl {
 
     }
 
+    public synchronized void asyncMethod3() {
+        try {
+            Thread.sleep(1000000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
