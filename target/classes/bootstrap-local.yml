@@ -14,13 +14,8 @@ spring:
     orderTopicTest: order_topic_test
     topicOrderTest: topic_order_test
     orderTopicLocal: order_topic_local
-    bootstrap-servers: 10.171.3.9:9092
+    bootstrap-servers: 127.0.0.1:9092
     producer:
-      properties:
-        metadata:
-          max:
-            age:
-              ms: 300000
       retries: 3
       acks: all
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

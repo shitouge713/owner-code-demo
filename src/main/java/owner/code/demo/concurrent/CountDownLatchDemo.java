@@ -13,10 +13,10 @@ public class CountDownLatchDemo {
         Worker w2 = new Worker(downLatch, "李四");
         Worker w3 = new Worker(downLatch, "王五");
         BossWork boss = new BossWork(downLatch);
+        executor.execute(boss);
         executor.execute(w3);
         executor.execute(w2);
         executor.execute(w1);
-        executor.execute(boss);
         executor.shutdown();
     }
 }
