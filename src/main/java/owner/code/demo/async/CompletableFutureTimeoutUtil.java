@@ -22,7 +22,7 @@ public class CompletableFutureTimeoutUtil {
         });
         // 附近货柜
         CompletableFuture<String> lbs = CompletableFuture.supplyAsync(() -> {
-            sleep(12L);
+            sleep(11L);
             log.info("第二个任务结果:附近货柜 - 执行结束");
             return "第二个任务结果:附近货柜";
         });
@@ -38,28 +38,13 @@ public class CompletableFutureTimeoutUtil {
             log.info("第四个任务结果:签到 - 执行结束");
             return "第四个任务结果:签到";
         });
-        Entity entity = new Entity();
-        banner.thenAcceptAsync(a -> {
-            entity.setA1(a);
-        });
-        lbs.thenAcceptAsync(a -> {
-            entity.setA2(a);
-        });
-        lottery.thenAcceptAsync(a -> {
-            entity.setA3(a);
-        });
-        signStatus.thenAcceptAsync(a -> {
-            entity.setA4(a);
-        });
-        CompletableFuture.allOf(banner, lbs, lottery, signStatus).get(5000, TimeUnit.SECONDS);
-        log.info("entity:{}", JSONObject.toJSON(entity));
-        CompletableFuture<String> a1 = CompletableFutureTimeoutUtil.completeOnTimeout("任务1超时执行", banner, 6, TimeUnit.SECONDS);
-        CompletableFuture<String> a2 = CompletableFutureTimeoutUtil.completeOnTimeout("任务2超时执行", lbs, 12, TimeUnit.SECONDS);
+        /*CompletableFuture<String> a1 = CompletableFutureTimeoutUtil.completeOnTimeout("任务1超时执行", banner, 6, TimeUnit.SECONDS);
+        CompletableFuture<String> a2 = CompletableFutureTimeoutUtil.completeOnTimeout("任务2超时执行", lbs, 6, TimeUnit.SECONDS);
         CompletableFuture<String> a3 = CompletableFutureTimeoutUtil.completeOnTimeout("任务3超时执行", lottery, 6, TimeUnit.SECONDS);
         CompletableFuture<String> a4 = CompletableFutureTimeoutUtil.completeOnTimeout("任务4超时执行", signStatus, 6, TimeUnit.SECONDS);
-        /**
+        *//**
          * 推荐方式：获取结果/将结果设置为属性，通过下面的这种方式异步操作
-         */
+         *//*
         a1.thenAcceptAsync(a -> {
             //此处可以替换为将a设置到对象属性中
             log.info("任务1执行结果：" + a);
@@ -75,13 +60,12 @@ public class CompletableFutureTimeoutUtil {
         a4.thenAcceptAsync(a -> {
             //此处可以替换为将a设置到对象属性中
             log.info("任务4执行结果：" + a);
-        });
+        });*/
         //get()、join()慎用
-        /*log.info("任务2执行结果：" + a1.join());
-        log.info("任务2执行结果：" + a2.join());
-        log.info("任务3执行结果：" + a3.join());
-        log.info("任务4执行结果：" + a4.join());*/
-        a4.get(10, TimeUnit.SECONDS);
+        log.info("任务1执行结果：" + banner.get(6000L, TimeUnit.MILLISECONDS));
+        log.info("任务2执行结果：" + lbs.get(6000L, TimeUnit.MILLISECONDS));
+        log.info("任务3执行结果：" + lottery.get(6000L, TimeUnit.MILLISECONDS));
+        log.info("任务4执行结果：" + signStatus.get(6000L, TimeUnit.MILLISECONDS));
         System.in.read();
     }
 
